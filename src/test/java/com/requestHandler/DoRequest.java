@@ -1,39 +1,28 @@
 package com.requestHandler;
 
-import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
-import io.restassured.specification.RequestSpecification;
-
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
 
-import java.util.Map;
-
-import org.junit.Assert;
-import org.junit.Before;
+import org.apache.http.HttpStatus;
 import org.junit.Test;
 
+import com.DataManager;
 import com.sun.org.glassfish.gmbal.Description;
+
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class DoRequest extends PrepareToRequest
 {
 
-    @Before
-    public void before()
-    {
-
-
-    }
-
     @Test
-    @Description("")
+    @Description("Search movie for taken imdb id")
     public void testImdbID()
     {
         searchWithID(getSpesificFilmID(1));
     }
 
-    @Description("")
+    @Description("Get movie in chosen index")
     public String getSpesificFilmID(int filmIndex)
     {
         Response response = requestDataSearch().when().get(baseURI).then().extract().response();
@@ -45,21 +34,21 @@ public class DoRequest extends PrepareToRequest
     private void searchWithID(String imdbID)
     {
         requestDataID(imdbID).when().get(baseURI).then()
-                .statusCode(200).and().body("artists.items.name",notEqual(true));
+                .statusCode(HttpStatus.SC_OK);
     }
 
     @Description("")
     private RequestSpecification requestDataSearch()
     {
         requestSpecification = given().
-                param("apikey", "5343c842").
-                param("s", "Harry Potter").
-                param("type", "movie").
-                param("y", "").
-                param("r", "json").
-                param("page", "1").
-                param("callback", "").
-                param("v", "1");
+                param(DataManager.API_KEY.getData(), "5343c842").
+                param(DataManager.FILM_NAME.getData(), "Harry Potter").
+                param(DataManager.TYPE.getData(), "movie").
+                param(DataManager.YEAR.getData(), "").
+                param(DataManager.DATA_TYPE.getData(), "json").
+                param(DataManager.PAGE.getData(), "1").
+                param(DataManager.CALLBACK.getData(), "").
+                param(DataManager.APIVERSION.getData(), "1");
         return requestSpecification;
     }
 
@@ -67,15 +56,15 @@ public class DoRequest extends PrepareToRequest
     private RequestSpecification requestDataID(String id)
     {
         requestSpecification = given().
-                param("apikey", "5343c842").
-                param("i", id).
-                param("t", "").
-                param("type", "").
-                param("y", "").
-                param("plot", "short").
-                param("r", "json").
-                param("callback", "").
-                param("v", "1");
+                param(DataManager.API_KEY.getData(), "5343c842").
+                param(DataManager.ID.getData(), id).
+                param(DataManager.TITLE.getData(), "").
+                param(DataManager.TYPE.getData(), "").
+                param(DataManager.YEAR.getData(), "").
+                param(DataManager.PLOT.getData(), "short").
+                param(DataManager.DATA_TYPE.getData(), "json").
+                param(DataManager.CALLBACK.getData(), "").
+                param(DataManager.APIVERSION.getData(), "1");
         return requestSpecification;
     }
 

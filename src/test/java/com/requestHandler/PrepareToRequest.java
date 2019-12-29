@@ -4,18 +4,17 @@ package com.requestHandler;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import javafx.scene.chart.PieChart.Data;
 
 import static io.restassured.RestAssured.given;
 
 import org.junit.After;
 import org.junit.Before;
 
+import com.DataManager;
+
 public class PrepareToRequest
 {
-
-    Response responseBody;
-    String responseText;
-    String imdbID;
     RequestSpecification requestSpecification;
 
     @Before
@@ -26,7 +25,6 @@ public class PrepareToRequest
 
     private void init() throws Exception
     {
-        RestAssured.baseURI = "http://www.omdbapi.com/";
     }
 
     @After
