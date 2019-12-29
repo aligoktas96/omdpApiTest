@@ -12,7 +12,6 @@ import io.restassured.specification.RequestSpecification;
 
 public class DoRequest extends PrepareToRequest
 {
-
     @Test
     @Description("Search movie for taken imdb id")
     public void testImdbID()
@@ -23,7 +22,7 @@ public class DoRequest extends PrepareToRequest
     @Description("Get movie in chosen index")
     public String getSpesificFilmID(int filmIndex)
     {
-        Response response = requestDataSearch().when().get(baseURI).then().extract().response();
+        Response response = requestDataSearch(searchData).when().get(baseURI).then().extract().response();
         String findFilm = new StringBuilder().append("Search[").append(filmIndex).append("].imdbID").toString();
         return response.jsonPath().getString(findFilm);
     }
@@ -39,11 +38,11 @@ public class DoRequest extends PrepareToRequest
     }
 
     @Description("initialize request body with search")
-    private RequestSpecification requestDataSearch()
+    private RequestSpecification requestDataSearch(String searchData)
     {
         requestSpecification = given().
                 param(DataManager.API_KEY.getData(), "5343c842").
-                param(DataManager.FILM_NAME.getData(), "Harry Potter").
+                param(DataManager.FILM_NAME.getData(), searchData).
                 param(DataManager.TYPE.getData(), "movie").
                 param(DataManager.YEAR.getData(), "").
                 param(DataManager.DATA_TYPE.getData(), "json").
