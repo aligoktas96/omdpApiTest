@@ -1,17 +1,16 @@
 package com.requestHandler;
 
 
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import javafx.scene.chart.PieChart.Data;
-
 import static io.restassured.RestAssured.given;
 
 import org.junit.After;
 import org.junit.Before;
 
 import com.DataManager;
+import com.sun.org.glassfish.gmbal.Description;
+
+import io.restassured.RestAssured;
+import io.restassured.specification.RequestSpecification;
 
 public class PrepareToRequest
 {
@@ -25,7 +24,9 @@ public class PrepareToRequest
 
     private void init() throws Exception
     {
+        RestAssured.baseURI="http://www.omdbapi.com/";
     }
+
 
     @After
     public void tearDown()

@@ -2,13 +2,11 @@ package com.requestHandler;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
-
+import static org.hamcrest.CoreMatchers.equalTo;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-
 import com.DataManager;
 import com.sun.org.glassfish.gmbal.Description;
-
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -34,10 +32,13 @@ public class DoRequest extends PrepareToRequest
     private void searchWithID(String imdbID)
     {
         requestDataID(imdbID).when().get(baseURI).then()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK).and()
+                .body("Title", equalTo("Harry Potter and the Sorcerer's Stone")).and()
+                .body("Year",equalTo("2001")).and()
+                .body("Released",equalTo("16 Nov 2001"));
     }
 
-    @Description("")
+    @Description("initialize request body with search")
     private RequestSpecification requestDataSearch()
     {
         requestSpecification = given().
@@ -52,8 +53,8 @@ public class DoRequest extends PrepareToRequest
         return requestSpecification;
     }
 
-    @Description("")
-    private RequestSpecification requestDataID(String id)
+    @Description("initialize request body with id")
+    public RequestSpecification requestDataID(String id)
     {
         requestSpecification = given().
                 param(DataManager.API_KEY.getData(), "5343c842").
