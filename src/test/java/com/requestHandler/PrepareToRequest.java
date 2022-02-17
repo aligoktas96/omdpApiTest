@@ -1,13 +1,11 @@
 package com.requestHandler;
 
 
-import static io.restassured.RestAssured.given;
+
 
 import org.junit.After;
 import org.junit.Before;
 
-import com.DataManager;
-import com.sun.org.glassfish.gmbal.Description;
 
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
